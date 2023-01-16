@@ -1,4 +1,4 @@
-import { githubApiResponses } from "../../github_api_responses";
+import { InMemoryGitHubRepositoryRepository } from "../../infrastructure/inMemoryGitHubRepository";
 import { ReactComponent as Check } from "./check.svg";
 import styles from "./Dashboard.module.scss";
 import { ReactComponent as Error } from "./error.svg";
@@ -21,32 +21,32 @@ const isoToReadableDate = (updatedAt: string): string => {
 	return `${diffDays} days ago`;
 };
 
+const gitHubResponses = new InMemoryGitHubRepositoryRepository();
+
 export function Dashboard() {
+	const repository = gitHubResponses.search();
+
 	return (
 		<>
 			<section className={styles.container}>
-				{githubApiResponses.map((repository) => (
-					<article className={styles.widget} key={repository.repositoryData.id}>
+				{repository.map((widget) => (
+					<article className={styles.widget} key={widget.repositoryData.id}>
 						<header className={styles.widget__header}>
 							<a
 								className={styles.widget__title}
-								href={repository.repositoryData.html_url}
+								href={widget.repositoryData.html_url}
 								target="_blank"
-								title={`${repository.repositoryData.organization.login}/${repository.repositoryData.name}`}
+								title={`${widget.repositoryData.organization.login}/${widget.repositoryData.name}`}
 								rel="noreferrer"
 							>
-								{repository.repositoryData.organization.login}/{repository.repositoryData.name}
+								{widget.repositoryData.organization.login}/{widget.repositoryData.name}
 							</a>
-							{repository.repositoryData.private ? <Lock /> : <Unlock />}
+							{widget.repositoryData.private ? <Lock /> : <Unlock />}
 						</header>
-						<p>Last update {isoToReadableDate(repository.repositoryData.updated_at)}</p>
-						{repository.CiStatus.workflow_runs.length && (
+						<p>Last update {isoToReadableDate(widget.repositoryData.updated_at)}</p>
+						{widget.CiStatus.workflow_runs.length && (
 							<div>
-								{repository.CiStatus.workflow_runs[0].status === "completed" ? (
-									<Check />
-								) : (
-									<Error />
-								)}
+								{widget.CiStatus.workflow_runs[0].status === "completed" ? <Check /> : <Error />}
 							</div>
 						)}
 					</article>
