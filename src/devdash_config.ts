@@ -10,16 +10,16 @@ export const config: DevDashConfig = {
 	github_access_token: process.env.REACT_APP_GITHUB_PERSONAL_ACCESS_TOKEN as string,
 	widgets: [
 		{
-			id: "997d2c56-917c-11ed-a1eb-0242ac120002",
-			repository_url: "https://github.com/fjavierlh/guia-social",
+			id: "2565fa91-2ac4-4e4f-9111-6d27a598082d",
+			repository_url: "https://github.com/CodelyTV/dotly",
 		},
 		{
-			id: "a14551a2-917c-11ed-a1eb-0242ac120002",
-			repository_url: "https://github.com/fjavierlh/nodejs-api-image-resizer",
+			id: "a66d5092-5ba6-4184-9931-cc485defe412",
+			repository_url: "https://github.com/CodelyTV/eslint-plugin-hexagonal-architecture",
 		},
 		{
-			id: "a558de12-917c-11ed-a1eb-0242ac120002",
-			repository_url: "https://github.com/fjavierlh/typescript-ddd-training",
+			id: "7c7a6b71-76dc-42ce-a46b-1730fc758193",
+			repository_url: "https://github.com/CodelyTV/refactoring-code-smells",
 		},
 	],
 };
