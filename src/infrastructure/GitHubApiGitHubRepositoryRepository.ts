@@ -32,11 +32,13 @@ export class GitHubApiGitHubRepositoryRepository {
 
 		return Promise.all(repositoryRequest)
 			.then((responses) => Promise.all(responses.map((response) => response.json())))
-			.then(([repositoryData, pullRequest, ciStatus]) => ({
-				repositoryData: repositoryData as RepositoryData,
-				pullRequest: pullRequest as PullRequest[],
-				ciStatus: ciStatus as CiStatus,
-			}));
+			.then(([repositoryData, pullRequests, ciStatus]) => {
+				return {
+					repositoryData: repositoryData as RepositoryData,
+					pullRequests: pullRequests as PullRequest[],
+					ciStatus: ciStatus as CiStatus,
+				};
+			});
 	}
 
 	private urlToId(url: string): RepositoryId {
