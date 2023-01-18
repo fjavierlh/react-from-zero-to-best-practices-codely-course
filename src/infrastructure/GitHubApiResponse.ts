@@ -461,6 +461,6 @@ export interface CiStatus {
 
 export interface GitHubApiResponses {
 	repositoryData: RepositoryData;
-	pullRequest: PullRequest[];
+	pullRequests: PullRequest[];
 	ciStatus: CiStatus;
 }
