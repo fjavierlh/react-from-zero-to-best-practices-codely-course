@@ -29,10 +29,9 @@ export function GitHubRepositoryWidget({ widget }: { widget: GitHubRepository })
 	return (
 		<article className={styles.widget} key={widget.id.name}>
 			<header className={styles.widget__header}>
-				<h2>
+				<h2 className={styles.widget__title}>
 					<a
-						className={styles.widget__title}
-						href={widget.url}
+						href={`repository/${widget.id.organization}/${widget.id.name}`}
 						target="_blank"
 						title={`${widget.id.organization}/${widget.id.name}`}
 						rel="noreferrer"
