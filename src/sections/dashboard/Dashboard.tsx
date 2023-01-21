@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 
 import { config } from "../../devdash_config";
-import { GitHubApiGitHubRepositoryRepository } from "../../infrastructure/GitHubApiGitHubRepositoryRepository";
-import { GitHubApiResponses } from "../../infrastructure/GitHubApiResponse";
+import { GitHubRepository } from "../../domain/GitHubRepository";
+import { GitHubRepositoryRepository } from "../../domain/GitHubRepositoryRepository";
 import { ReactComponent as Brand } from "./brand.svg";
 import { ReactComponent as Check } from "./check.svg";
 import styles from "./Dashboard.module.scss";
@@ -15,10 +15,9 @@ import { ReactComponent as Start } from "./star.svg";
 import { ReactComponent as Unlock } from "./unlock.svg";
 import { ReactComponent as Watchers } from "./watchers.svg";
 
-const isoToReadableDate = (updatedAt: string): string => {
-	const lastUpdate = new Date(updatedAt);
+const isoToReadableDate = (updatedAt: Date): string => {
 	const currentDate = new Date();
-	const diffDays = currentDate.getDate() - lastUpdate.getDate();
+	const diffDays = currentDate.getDate() - updatedAt.getDate();
 
 	if (diffDays === 0) {
 		return "today";
@@ -31,15 +30,18 @@ const isoToReadableDate = (updatedAt: string): string => {
 	return `${diffDays} days ago`;
 };
 
-export function Dashboard() {
-	const repository = new GitHubApiGitHubRepositoryRepository(config.github_access_token);
-	const [gitHubApiResponses, setGitHubApiResponses] = useState<GitHubApiResponses[]>([]);
+interface Props {
+	repository: GitHubRepositoryRepository;
+}
+
+export function Dashboard({ repository }: Props) {
+	const [gitHubRespositories, setGitHubRespositories] = useState<GitHubRepository[]>([]);
 
 	useEffect(() => {
 		repository
 			.search(config.widgets.map((widget) => widget.repository_url))
 			.then((responses) => {
-				setGitHubApiResponses(responses);
+				setGitHubRespositories(responses);
 			})
 			.catch((error) => console.error(error));
 	}, []);
@@ -52,63 +54,57 @@ export function Dashboard() {
 					<h1 className={styles.app__brand}>DevDash_</h1>
 				</section>
 			</header>
-			{gitHubApiResponses.length === 0 ? (
+			{gitHubRespositories.length === 0 ? (
 				<div>
 					<span>No hay widgets configurados</span>
 				</div>
 			) : (
 				<section className={styles.container}>
-					{gitHubApiResponses.map((widget) => (
-						<article className={styles.widget} key={widget.repositoryData.id}>
+					{gitHubRespositories.map((widget) => (
+						<article className={styles.widget} key={widget.id.name}>
 							<header className={styles.widget__header}>
 								<h2>
 									<a
 										className={styles.widget__title}
-										href={widget.repositoryData.html_url}
+										href={widget.url}
 										target="_blank"
-										title={`${widget.repositoryData.organization.login}/${widget.repositoryData.name}`}
+										title={`${widget.id.organization}/${widget.id.name}`}
 										rel="noreferrer"
 									>
-										{widget.repositoryData.organization.login}/{widget.repositoryData.name}
+										{widget.id.organization}/{widget.id.name}
 									</a>
 								</h2>
-								{widget.repositoryData.private ? <Lock /> : <Unlock />}
+								{widget.private ? <Lock /> : <Unlock />}
 							</header>
 							<div className={styles.widget__body}>
 								<div className={styles.widget__status}>
-									<p>Last update {isoToReadableDate(widget.repositoryData.updated_at)}</p>
-									{widget.ciStatus.workflow_runs.length > 0 && (
-										<div>
-											{widget.ciStatus.workflow_runs[0].status === "completed" ? (
-												<Check />
-											) : (
-												<Error />
-											)}
-										</div>
+									<p>Last update {isoToReadableDate(widget.updatedAt)}</p>
+									{widget.hasWorkflows && (
+										<div>{widget.isLastWorkflowSuccess ? <Check /> : <Error />}</div>
 									)}
 								</div>
-								<p className={styles.widget__description}>{widget.repositoryData.description}</p>
+								<p className={styles.widget__description}>{widget.description}</p>
 							</div>
 							<footer className={styles.widget__footer}>
 								<div className={styles.widget__stat}>
 									<Start />
-									<span>{widget.repositoryData.stargazers_count}</span>
+									<span>{widget.stars}</span>
 								</div>
 								<div className={styles.widget__stat}>
 									<Watchers />
-									<span>{widget.repositoryData.watchers_count}</span>
+									<span>{widget.watchers}</span>
 								</div>
 								<div className={styles.widget__stat}>
 									<Forks />
-									<span>{widget.repositoryData.forks_count}</span>
+									<span>{widget.forks}</span>
 								</div>
 								<div className={styles.widget__stat}>
 									<IssueOpened />
-									<span>{widget.repositoryData.open_issues_count}</span>
+									<span>{widget.issues}</span>
 								</div>
 								<div className={styles.widget__stat}>
 									<PullRequests />
-									<span>{widget.pullRequests.length}</span>
+									<span>{widget.pullRequests}</span>
 								</div>
 							</footer>
 						</article>
