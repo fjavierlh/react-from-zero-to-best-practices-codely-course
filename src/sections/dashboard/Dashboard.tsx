@@ -1,27 +1,14 @@
-import { useEffect, useState } from "react";
-
 import { config } from "../../devdash_config";
-import { GitHubRepository } from "../../domain/GitHubRepository";
 import { GitHubRepositoryRepository } from "../../domain/GitHubRepositoryRepository";
 import { ReactComponent as Brand } from "./brand.svg";
 import styles from "./Dashboard.module.scss";
 import { GitHubRepositoryWidget } from "./GitHubRepositoryWidget";
+import { useGitHubRepositories } from "./useGitHubRepositories";
 
-interface Props {
-	repository: GitHubRepositoryRepository;
-}
+const gitHubRepositoriesUrls: string[] = config.widgets.map((widget) => widget.repository_url);
 
-export function Dashboard({ repository }: Props) {
-	const [gitHubRespositories, setGitHubRespositories] = useState<GitHubRepository[]>([]);
-
-	useEffect(() => {
-		repository
-			.search(config.widgets.map((widget) => widget.repository_url))
-			.then((responses) => {
-				setGitHubRespositories(responses);
-			})
-			.catch((error) => console.error(error));
-	}, []);
+export function Dashboard({ repository }: { repository: GitHubRepositoryRepository }) {
+	const { gitHubRepositories } = useGitHubRepositories(repository, gitHubRepositoriesUrls);
 
 	return (
 		<>
@@ -31,13 +18,13 @@ export function Dashboard({ repository }: Props) {
 					<h1 className={styles.app__brand}>DevDash_</h1>
 				</section>
 			</header>
-			{gitHubRespositories.length === 0 ? (
+			{gitHubRepositories.length === 0 ? (
 				<div>
 					<span>No hay widgets configurados</span>
 				</div>
 			) : (
 				<section className={styles.container}>
-					{gitHubRespositories.map((widget) => (
+					{gitHubRepositories.map((widget) => (
 						<GitHubRepositoryWidget
 							key={`${widget.id.organization}/${widget.id.name}`}
 							widget={widget}
