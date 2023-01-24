@@ -55,6 +55,10 @@ export function GitHubRepositoryDetail({ repository }: { repository: GitHubRepos
 			</table>
 
 			<h3>Workflow runs status</h3>
+			<p>
+				⏱️Last workflow run:{" "}
+				{gitHubRepository.workflowRunsStatus[0].createdAt.toLocaleDateString("es-ES")}
+			</p>
 			<table className={styles.detail__table}>
 				<thead>
 					<tr>
