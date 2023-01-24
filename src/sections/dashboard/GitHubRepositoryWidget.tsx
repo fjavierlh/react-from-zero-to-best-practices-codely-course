@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 import { GitHubRepository } from "../../domain/GitHubRepository";
 import { ReactComponent as Lock } from "./../../assets/svgs/lock.svg";
 import { ReactComponent as Unlock } from "./../../assets/svgs/unlock.svg";
@@ -30,12 +32,12 @@ export function GitHubRepositoryWidget({ widget }: { widget: GitHubRepository })
 		<article className={styles.widget} key={widget.id.name}>
 			<header className={styles.widget__header}>
 				<h2 className={styles.widget__title}>
-					<a
-						href={`repository/${widget.id.organization}/${widget.id.name}`}
+					<Link
+						to={`repository/${widget.id.organization}/${widget.id.name}`}
 						title={`${widget.id.organization}/${widget.id.name}`}
 					>
 						{widget.id.organization}/{widget.id.name}
-					</a>
+					</Link>
 				</h2>
 				{widget.private ? <Lock /> : <Unlock />}
 			</header>
