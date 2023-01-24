@@ -1,13 +1,13 @@
 import { GitHubRepository } from "../../domain/GitHubRepository";
+import { ReactComponent as Lock } from "./../../assets/svgs/lock.svg";
+import { ReactComponent as Unlock } from "./../../assets/svgs/unlock.svg";
 import { ReactComponent as Check } from "./check.svg";
 import { ReactComponent as Error } from "./error.svg";
 import { ReactComponent as PullRequests } from "./git-pull-request.svg";
 import styles from "./GitHubRepositoryWidget.module.scss";
 import { ReactComponent as IssueOpened } from "./issue-opened.svg";
-import { ReactComponent as Lock } from "./lock.svg";
 import { ReactComponent as Forks } from "./repo-forked.svg";
 import { ReactComponent as Start } from "./star.svg";
-import { ReactComponent as Unlock } from "./unlock.svg";
 import { ReactComponent as Watchers } from "./watchers.svg";
 
 const isoToReadableDate = (updatedAt: Date): string => {
