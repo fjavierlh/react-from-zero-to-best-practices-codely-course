@@ -6,17 +6,20 @@ import { GitHubRepositoryRepository } from "./../../domain/GitHubRepositoryRepos
 export function useGitHubRepositories(
 	repository: GitHubRepositoryRepository,
 	repositoryUrls: string[]
-): { gitHubRepositories: GitHubRepository[] } {
-	const [gitHubRespositories, setGitHubRespositories] = useState<GitHubRepository[]>([]);
+): { gitHubRepositories: GitHubRepository[]; isLoading: boolean } {
+	const [gitHubRepositories, setGitHubRespositories] = useState<GitHubRepository[]>([]);
+	const [isLoading, setIsLoading] = useState(true);
 
 	useEffect(() => {
+		setIsLoading(true);
 		repository
 			.search(repositoryUrls)
 			.then((responses) => {
 				setGitHubRespositories(responses);
+				setIsLoading(false);
 			})
 			.catch((error) => console.error(error));
 	}, [repository, repositoryUrls]);
 
-	return { gitHubRepositories: gitHubRespositories };
+	return { gitHubRepositories, isLoading };
 }
