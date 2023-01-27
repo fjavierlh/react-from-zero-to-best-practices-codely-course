@@ -2,9 +2,9 @@ import { useEffect, useState } from "react";
 
 import { RepositoryId } from "../../domain/GitHubRepository";
 import { GitHubRepositoryPullRequest } from "../../domain/GitHubRepositoryPullRequest";
-import { GitHubRepositoryPullRequestRepository } from "./../../domain/GitHubRepositoryPullRequestRepository";
+import { GitHubRepositoryPullRequestRepository } from "../../domain/GitHubRepositoryPullRequestRepository";
 
-export function useGitHubRepositoryPullRequest(
+export function useGitHubRepositoryPullRequests(
 	repository: GitHubRepositoryPullRequestRepository,
 	respositoryId: RepositoryId
 ): { pullRequests: GitHubRepositoryPullRequest[]; isLoading: boolean } {
