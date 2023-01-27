@@ -6,15 +6,19 @@ import { GitHubRepositoryRepository } from "./../../domain/GitHubRepositoryRepos
 export function useGitHubRepository(
 	repository: GitHubRepositoryRepository,
 	repositoryId: RepositoryId
-): { gitHubRepository: GitHubRepository | undefined } {
+): { gitHubRepository: GitHubRepository | undefined; isLoading: boolean } {
 	const [gitHubRepository, setRepositoryData] = useState<GitHubRepository | undefined>();
+	const [isLoading, setIsLoading] = useState(true);
 
 	useEffect(() => {
 		repository
 			.byId(repositoryId)
-			.then((gitHubRepository) => setRepositoryData(gitHubRepository))
+			.then((gitHubRepository) => {
+				setIsLoading(false);
+				setRepositoryData(gitHubRepository);
+			})
 			.catch((error) => console.error(error));
 	}, [repository, repositoryId]);
 
-	return { gitHubRepository };
+	return { gitHubRepository, isLoading };
 }
