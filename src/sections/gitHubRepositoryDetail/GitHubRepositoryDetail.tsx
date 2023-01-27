@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import { GitHubRepositoryRepository } from "../../domain/GitHubRepositoryRepository";
 import { ReactComponent as Lock } from "./../../assets/svgs/lock.svg";
 import { ReactComponent as Unlock } from "./../../assets/svgs/unlock.svg";
+import { DetailSkeleton } from "./DetailSkeleton";
 import styles from "./GitHubRepositoryDetail.module.scss";
 import { useGitHubRepository } from "./useGItHubRepository";
 
@@ -12,7 +13,11 @@ export function GitHubRepositoryDetail({ repository }: { repository: GitHubRepos
 
 	const repositoryId = useMemo(() => ({ name, organization }), [name, organization]);
 
-	const { gitHubRepository } = useGitHubRepository(repository, repositoryId);
+	const { gitHubRepository, isLoading } = useGitHubRepository(repository, repositoryId);
+
+	if (isLoading) {
+		return <DetailSkeleton />;
+	}
 
 	if (!gitHubRepository) {
 		return <span>No existe este repositorio</span>;
