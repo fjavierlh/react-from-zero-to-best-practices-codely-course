@@ -2,18 +2,26 @@ import { useMemo } from "react";
 
 import { config } from "../../devdash_config";
 import { GitHubRepositoryRepository } from "../../domain/GitHubRepositoryRepository";
+import { RepositoryWidgetRepository } from "../../domain/RepositoryWidgetRepository";
+import { AddWidgetForm } from "./AddWidgetForm";
 import styles from "./Dashboard.module.scss";
 import { GitHubRepositoryWidget } from "./GitHubRepositoryWidget";
 import { useGitHubRepositories } from "./useGitHubRepositories";
 import { WidgetsSkeleton } from "./WidgetSkeleton";
 
-export function Dashboard({ repository }: { repository: GitHubRepositoryRepository }) {
+export function Dashboard({
+	gitHubRepositoryRepository,
+	repositoryWidgetRepository,
+}: {
+	gitHubRepositoryRepository: GitHubRepositoryRepository;
+	repositoryWidgetRepository: RepositoryWidgetRepository;
+}) {
 	const gitHubRepositoriesUrls = useMemo(
 		() => config.widgets.map((widget) => widget.repository_url),
 		[]
 	);
 	const { gitHubRepositories, isLoading } = useGitHubRepositories(
-		repository,
+		gitHubRepositoryRepository,
 		gitHubRepositoriesUrls
 	);
 
@@ -36,6 +44,7 @@ export function Dashboard({ repository }: { repository: GitHubRepositoryReposito
 							widget={widget}
 						/>
 					))}
+					<AddWidgetForm repositoryWidget={repositoryWidgetRepository} />
 				</section>
 			)}
 		</>
