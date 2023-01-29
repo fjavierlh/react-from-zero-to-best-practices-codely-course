@@ -24,10 +24,23 @@ const TopBarProgressByLocation = () => {
 		setProgress(false);
 	}, [previousLocation]);
 
+	// useEffect(() => {
+	// 	const disableTopBar = () => {
+	// 		setProgress(false);
+	// 	};
+
+	// 	document.addEventListener("pageLoaded", disableTopBar);
+
+	// 	return () => {
+	// 		document.removeEventListener("pageLoader", disableTopBar);
+	// 	};
+	// }, []);
+
 	const preventInfiniteProgressBar = () => {
 		const hasClickedOnALinkToTheCurrentPage = location.pathname === previousLocation;
 		if (hasClickedOnALinkToTheCurrentPage) {
 			setPreviousLocation("");
+			// setProgress(false);
 		}
 	};
 
