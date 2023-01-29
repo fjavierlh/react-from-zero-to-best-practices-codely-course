@@ -35,6 +35,8 @@ export function GitHubRepositoryDetail({
 	if (!gitHubRepository) {
 		return <span>No existe este repositorio</span>;
 	}
+	// TODO: dispatch event to load top bar progress bar
+	// document.dispatchEvent(new CustomEvent("pageLoaded"));
 
 	return (
 		<section className={styles["repository-detail"]}>

@@ -24,6 +24,7 @@ const TopBarProgressByLocation = () => {
 		setProgress(false);
 	}, [previousLocation]);
 
+	// TODO: add event listener to stop load bar when page is loader
 	// useEffect(() => {
 	// 	const disableTopBar = () => {
 	// 		setProgress(false);
@@ -32,7 +33,7 @@ const TopBarProgressByLocation = () => {
 	// 	document.addEventListener("pageLoaded", disableTopBar);
 
 	// 	return () => {
-	// 		document.removeEventListener("pageLoader", disableTopBar);
+	// 		document.removeEventListener("pageLoaded", disableTopBar);
 	// 	};
 	// }, []);
 
