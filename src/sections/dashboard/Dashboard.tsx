@@ -3,7 +3,7 @@ import { useMemo } from "react";
 import { config } from "../../devdash_config";
 import { GitHubRepositoryRepository } from "../../domain/GitHubRepositoryRepository";
 import { RepositoryWidgetRepository } from "../../domain/RepositoryWidgetRepository";
-import { AddWidgetForm } from "./AddWidgetForm";
+import { AddRepositoryWidgetForm } from "./AddRepositoryWidgetForm";
 import styles from "./Dashboard.module.scss";
 import { GitHubRepositoryWidget } from "./GitHubRepositoryWidget";
 import { useGitHubRepositories } from "./useGitHubRepositories";
@@ -44,7 +44,7 @@ export function Dashboard({
 							widget={widget}
 						/>
 					))}
-					<AddWidgetForm repositoryWidget={repositoryWidgetRepository} />
+					<AddRepositoryWidgetForm repositoryWidget={repositoryWidgetRepository} />
 				</section>
 			)}
 		</>
