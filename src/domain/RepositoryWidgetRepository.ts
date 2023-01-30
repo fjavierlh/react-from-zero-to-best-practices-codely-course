@@ -1,7 +1,7 @@
-import { RepositoryId } from "./GitHubRepository";
+import { RepositoryAlreadyExistsError } from "./RepositoryAlreadyExistsError";
 import { RepositoryWidget } from "./RepositoryWidget";
 
 export interface RepositoryWidgetRepository {
-	persist(repositoryWidget: RepositoryWidget): Promise<void>;
-	search(repositoryId: RepositoryId): Promise<RepositoryWidget[]>;
+	persist(repositoryWidget: RepositoryWidget): Promise<RepositoryAlreadyExistsError | void>;
+	search(): Promise<RepositoryWidget[]>;
 }
