@@ -5,4 +5,8 @@ export class LocalStorageRepositoryWidgetRepository implements RepositoryWidgetR
 	async persist(repositoryWidget: RepositoryWidget): Promise<void> {
 		await Promise.resolve();
 	}
+
+	async search(): Promise<RepositoryWidget[]> {
+		return await Promise.resolve([]);
+	}
 }
