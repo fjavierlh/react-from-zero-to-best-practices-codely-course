@@ -54,6 +54,7 @@ describe("AddRepositoryWidgetForm", () => {
 		expect(mockRepositoryWidget.persist).toHaveBeenCalledWith(newRepositoryWidget);
 
 		mockRepositoryWidget.persist.mockReset();
+		mockRepositoryWidget.search.mockClear();
 	});
 
 	test("show error when repository already exists in dashboard", async () => {
@@ -86,5 +87,39 @@ describe("AddRepositoryWidgetForm", () => {
 		expect(errorMessage).toBeInTheDocument();
 		// eslint-disable-next-line @typescript-eslint/unbound-method
 		expect(mockRepositoryWidget.persist).not.toHaveBeenCalled();
+
+		mockRepositoryWidget.search.mockReset();
+	});
+
+	test("url repository input must be an url", async () => {
+		const widgetWithoutUrl: RepositoryWidget = {
+			id: "some-id",
+			url: "Esto no es una url",
+		};
+
+		render(<AddRepositoryWidgetForm repositoryWidget={mockRepositoryWidget} />);
+
+		const addWidgetButton = await screen.findByRole("button", { name: /Añadir repositorio/i });
+
+		userEvent.click(addWidgetButton);
+
+		const idInput = screen.getByLabelText(/Id/i);
+		userEvent.type(idInput, widgetWithoutUrl.id);
+
+		const urlInput = screen.getByLabelText(/Url del repositorio/i);
+		userEvent.type(urlInput, widgetWithoutUrl.url);
+
+		const submitButton = await screen.findByRole("button", { name: /Añadir/i });
+		userEvent.click(submitButton);
+
+		const errorMessage = await screen.findByRole("alert", {
+			description: /Introduce una url válida/i,
+		});
+
+		expect(errorMessage).toBeInTheDocument();
+		// eslint-disable-next-line @typescript-eslint/unbound-method
+		expect(mockRepositoryWidget.persist).not.toHaveBeenCalled();
+		// eslint-disable-next-line @typescript-eslint/unbound-method
+		expect(mockRepositoryWidget.search).not.toHaveBeenCalled();
 	});
 });
