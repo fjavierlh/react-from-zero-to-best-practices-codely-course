@@ -91,7 +91,7 @@ describe("AddRepositoryWidgetForm", () => {
 		mockRepositoryWidget.search.mockReset();
 	});
 
-	test("url repository input must be an url", async () => {
+	test("repository url input must be an url", async () => {
 		const widgetWithoutUrl: RepositoryWidget = {
 			id: "some-id",
 			url: "Esto no es una url",
