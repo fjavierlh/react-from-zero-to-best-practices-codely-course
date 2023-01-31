@@ -1,6 +1,8 @@
 import { FormEvent, useState } from "react";
 
 import { ReactComponent as Add } from "../../assets/svgs/add.svg";
+import { RepositoryAlreadyExistsError } from "../../domain/RepositoryAlreadyExistsError";
+import { RepositoryURLisNotValidError } from "../../domain/RepositoryURLisNotValidError";
 import { RepositoryWidgetRepository } from "../../domain/RepositoryWidgetRepository";
 import styles from "./AddRepositoryWidgetForm.module.scss";
 import { useAddRepositoryWidget } from "./useAddRepositoryWidget";
@@ -18,13 +20,26 @@ export function AddRepositoryWidgetForm({
 }) {
 	const [isFormActive, setIsFormActive] = useState(false);
 	const [hasAlreadyExistsError, setHasAlreadyExistsError] = useState(false);
+	const [isNotValidURLError, setIsNotValidURLError] = useState(false);
 	const { add } = useAddRepositoryWidget(repositoryWidget);
 
 	const submitForm = async (event: GenericFormEvent<FormFields>) => {
 		event.preventDefault();
 		const { id, url } = event.target.elements;
 		const error = await add({ id: id.value, url: url.value });
-		setHasAlreadyExistsError(!!error);
+
+		if (error instanceof RepositoryURLisNotValidError) {
+			setIsNotValidURLError(true);
+
+			return;
+		}
+
+		if (error instanceof RepositoryAlreadyExistsError) {
+			setHasAlreadyExistsError(true);
+
+			return;
+		}
+
 		setIsFormActive(false);
 	};
 
@@ -54,6 +69,11 @@ export function AddRepositoryWidgetForm({
 						{hasAlreadyExistsError && (
 							<p className={styles.error} role="alert" aria-describedby="duplicated-error">
 								<span id="duplicated-error">Repositorio duplicado</span>
+							</p>
+						)}
+						{isNotValidURLError && (
+							<p className={styles.error} role="alert" aria-describedby="not-valid-url-error">
+								<span id="not-valid-url-error">Introduce una url válida</span>
 							</p>
 						)}
 					</form>
