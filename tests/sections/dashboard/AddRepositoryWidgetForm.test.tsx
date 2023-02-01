@@ -123,7 +123,7 @@ describe("AddRepositoryWidgetForm", () => {
 		expect(mockRepositoryWidget.search).not.toHaveBeenCalled();
 	});
 
-	test("url repository input must be an url of github", async () => {
+	test("url repository input show error when url is not github domain", async () => {
 		const widgetWithoutGitHubDomainUrl: RepositoryWidget = {
 			id: "some-id",
 			url: "https://gitlab.com/some-repository",
