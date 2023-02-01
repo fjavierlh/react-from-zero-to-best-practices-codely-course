@@ -122,4 +122,36 @@ describe("AddRepositoryWidgetForm", () => {
 		// eslint-disable-next-line @typescript-eslint/unbound-method
 		expect(mockRepositoryWidget.search).not.toHaveBeenCalled();
 	});
+
+	test("url repository input must be an url of github", async () => {
+		const widgetWithoutGitHubDomainUrl: RepositoryWidget = {
+			id: "some-id",
+			url: "https://gitlab.com/some-repository",
+		};
+
+		render(<AddRepositoryWidgetForm repositoryWidget={mockRepositoryWidget} />);
+
+		const addWidgetButton = await screen.findByRole("button", { name: /Añadir repositorio/i });
+
+		userEvent.click(addWidgetButton);
+
+		const idInput = screen.getByLabelText(/Id/i);
+		userEvent.type(idInput, widgetWithoutGitHubDomainUrl.id);
+
+		const urlInput = screen.getByLabelText(/Url del repositorio/i);
+		userEvent.type(urlInput, widgetWithoutGitHubDomainUrl.url);
+
+		const submitButton = await screen.findByRole("button", { name: /Añadir/i });
+		userEvent.click(submitButton);
+
+		const errorMessage = await screen.findByRole("alert", {
+			description: /La url debe ser de un repositorio del dominio github.com/i,
+		});
+
+		expect(errorMessage).toBeInTheDocument();
+		// eslint-disable-next-line @typescript-eslint/unbound-method
+		expect(mockRepositoryWidget.persist).not.toHaveBeenCalled();
+		// eslint-disable-next-line @typescript-eslint/unbound-method
+		expect(mockRepositoryWidget.search).not.toHaveBeenCalled();
+	});
 });
