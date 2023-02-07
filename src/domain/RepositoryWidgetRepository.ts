@@ -1,7 +1,6 @@
-import { RepositoryAlreadyExistsError } from "./RepositoryAlreadyExistsError";
 import { RepositoryWidget } from "./RepositoryWidget";
 
 export interface RepositoryWidgetRepository {
-	persist(repositoryWidget: RepositoryWidget): Promise<RepositoryAlreadyExistsError | void>;
+	persist(repositoryWidget: RepositoryWidget): Promise<void>;
 	search(): Promise<RepositoryWidget[]>;
 }
