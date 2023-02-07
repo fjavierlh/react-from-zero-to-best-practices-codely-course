@@ -3,7 +3,7 @@ import { FormEvent, useState } from "react";
 import { ReactComponent as Add } from "../../assets/svgs/add.svg";
 import { RepositoryWidgetRepository } from "../../domain/RepositoryWidgetRepository";
 import styles from "./AddRepositoryWidgetForm.module.scss";
-import { AddRepositoryWidgetErrors, useAddRepositoryWidget } from "./useAddRepositoryWidget";
+import { AddRepositoryWidgetFormErrors, useAddRepositoryWidget } from "./useAddRepositoryWidget";
 
 type FormFields = { id: string; url: string };
 
@@ -17,7 +17,7 @@ export function AddRepositoryWidgetForm({
 	repositoryWidget: RepositoryWidgetRepository;
 }) {
 	const [isFormActive, setIsFormActive] = useState(false);
-	const [formHasErrors, setFormHasErrors] = useState<AddRepositoryWidgetErrors | null>();
+	const [formHasErrors, setFormHasErrors] = useState<AddRepositoryWidgetFormErrors>({});
 	const { add } = useAddRepositoryWidget(repositoryWidget);
 
 	const submitForm = async (event: GenericFormEvent<FormFields>) => {
@@ -28,19 +28,18 @@ export function AddRepositoryWidgetForm({
 			url: url.value,
 		});
 
-		if (errors) {
+		if (Object.values(errors).some((error) => error)) {
 			setFormHasErrors(errors);
 
 			return;
 		}
-
 		setIsFormActive(false);
 	};
 
 	return (
 		<article className={styles.add_widget}>
 			<div className={styles.container}>
-				{!isFormActive && !formHasErrors ? (
+				{!isFormActive ? (
 					<button onClick={() => setIsFormActive(true)} className={styles.add_button}>
 						<Add />
 						<p>Añadir repositorio</p>
@@ -60,14 +59,21 @@ export function AddRepositoryWidgetForm({
 						<div>
 							<input type="submit" value={"Añadir"} />
 						</div>
-						{formHasErrors?.hasAlreadyExistsError && (
+						{formHasErrors.hasAlreadyExistsError && (
 							<p className={styles.error} role="alert" aria-describedby="duplicated-error">
 								<span id="duplicated-error">Repositorio duplicado</span>
 							</p>
 						)}
-						{formHasErrors?.isNotValidURLError && (
+						{formHasErrors.isNotValidURLError && (
 							<p className={styles.error} role="alert" aria-describedby="not-valid-url-error">
 								<span id="not-valid-url-error">Introduce una url válida</span>
+							</p>
+						)}
+						{formHasErrors.isNotGitHubDomain && (
+							<p className={styles.error} role="alert" aria-describedby="not-git-hub-domain-error">
+								<span id="not-git-hub-domain-error">
+									La url debe ser de un repositorio del dominio github.com
+								</span>
 							</p>
 						)}
 					</form>
