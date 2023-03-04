@@ -1,8 +1,8 @@
-import { RepositoryAlreadyExistsError } from "../../domain/RepositoryAlreadyExistsError";
-import { RepositoryUrlIsNotGitHubDomainError } from "../../domain/RepositoryUrlIsNotGitHubDomain";
-import { RepositoryURLisNotValidError } from "../../domain/RepositoryURLisNotValidError";
-import { RepositoryWidget } from "./../../domain/RepositoryWidget";
-import { RepositoryWidgetRepository } from "./../../domain/RepositoryWidgetRepository";
+import { RepositoryAlreadyExistsError } from "../../../domain/RepositoryAlreadyExistsError";
+import { RepositoryUrlIsNotGitHubDomainError } from "../../../domain/RepositoryUrlIsNotGitHubDomain";
+import { RepositoryURLisNotValidError } from "../../../domain/RepositoryURLisNotValidError";
+import { RepositoryWidget } from "../../../domain/RepositoryWidget";
+import { RepositoryWidgetRepository } from "../../../domain/RepositoryWidgetRepository";
 
 export type AddRepositoryWidgetFormErrors = {
 	hasAlreadyExistsError?: boolean;

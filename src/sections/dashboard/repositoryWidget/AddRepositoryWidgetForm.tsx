@@ -1,7 +1,7 @@
 import { FormEvent, useState } from "react";
 
-import { ReactComponent as Add } from "../../assets/svgs/add.svg";
-import { RepositoryWidgetRepository } from "../../domain/RepositoryWidgetRepository";
+import { ReactComponent as Add } from "../../../assets/svgs/add.svg";
+import { RepositoryWidgetRepository } from "../../../domain/RepositoryWidgetRepository";
 import styles from "./AddRepositoryWidgetForm.module.scss";
 import { AddRepositoryWidgetFormErrors, useAddRepositoryWidget } from "./useAddRepositoryWidget";
 

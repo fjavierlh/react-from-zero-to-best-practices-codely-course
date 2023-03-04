@@ -3,11 +3,11 @@ import { useMemo } from "react";
 import { config } from "../../devdash_config";
 import { GitHubRepositoryRepository } from "../../domain/GitHubRepositoryRepository";
 import { RepositoryWidgetRepository } from "../../domain/RepositoryWidgetRepository";
-import { AddRepositoryWidgetForm } from "./AddRepositoryWidgetForm";
 import styles from "./Dashboard.module.scss";
-import { GitHubRepositoryWidget } from "./GitHubRepositoryWidget";
-import { useGitHubRepositories } from "./useGitHubRepositories";
-import { WidgetsSkeleton } from "./WidgetSkeleton";
+import { AddRepositoryWidgetForm } from "./repositoryWidget/AddRepositoryWidgetForm";
+import { GitHubRepositoryWidget } from "./repositoryWidget/GitHubRepositoryWidget";
+import { useGitHubRepositories } from "./repositoryWidget/useGitHubRepositories";
+import { WidgetsSkeleton } from "./repositoryWidget/WidgetSkeleton";
 
 export function Dashboard({
 	gitHubRepositoryRepository,

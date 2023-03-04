@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
-import { GitHubRepository } from "../../domain/GitHubRepository";
-import { GitHubRepositoryRepository } from "./../../domain/GitHubRepositoryRepository";
+import { GitHubRepository } from "../../../domain/GitHubRepository";
+import { GitHubRepositoryRepository } from "../../../domain/GitHubRepositoryRepository";
 
 export function useGitHubRepositories(
 	repository: GitHubRepositoryRepository,
