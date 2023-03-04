@@ -11,13 +11,10 @@ export function useGitHubRepository(
 	const [isLoading, setIsLoading] = useState(true);
 
 	useEffect(() => {
-		repository
-			.byId(repositoryId)
-			.then((gitHubRepository) => {
-				setIsLoading(false);
-				setRepositoryData(gitHubRepository);
-			})
-			.catch((error) => console.error(error));
+		repository.byId(repositoryId).then((gitHubRepository) => {
+			setIsLoading(false);
+			setRepositoryData(gitHubRepository);
+		});
 	}, [repository, repositoryId]);
 
 	return { gitHubRepository, isLoading };

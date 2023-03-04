@@ -12,13 +12,10 @@ export function useGitHubRepositories(
 
 	useEffect(() => {
 		setIsLoading(true);
-		repository
-			.search(repositoryUrls)
-			.then((responses) => {
-				setGitHubRespositories(responses);
-				setIsLoading(false);
-			})
-			.catch((error) => console.error(error));
+		repository.search(repositoryUrls).then((responses) => {
+			setGitHubRespositories(responses);
+			setIsLoading(false);
+		});
 	}, [repository, repositoryUrls]);
 
 	return { gitHubRepositories, isLoading };

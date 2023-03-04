@@ -12,13 +12,10 @@ export function useGitHubRepositoryPullRequests(
 	const [isLoading, setIsLoading] = useState(true);
 
 	useEffect(() => {
-		repository
-			.search(respositoryId)
-			.then((pullRequests) => {
-				setPullRequests(pullRequests);
-				setIsLoading(false);
-			})
-			.catch((error) => console.error(error));
+		repository.search(respositoryId).then((pullRequests) => {
+			setPullRequests(pullRequests);
+			setIsLoading(false);
+		});
 	}, [repository, respositoryId]);
 
 	return { pullRequests, isLoading };
