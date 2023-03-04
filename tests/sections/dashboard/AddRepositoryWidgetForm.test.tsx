@@ -4,7 +4,7 @@ import mock, { mockReset } from "jest-mock-extended/lib/Mock";
 
 import { RepositoryWidget } from "../../../src/domain/RepositoryWidget";
 import { RepositoryWidgetRepository } from "../../../src/domain/RepositoryWidgetRepository";
-import { AddRepositoryWidgetForm } from "../../../src/sections/dashboard/AddRepositoryWidgetForm";
+import { AddRepositoryWidgetForm } from "../../../src/sections/dashboard/repositoryWidget/AddRepositoryWidgetForm";
 
 describe("AddRepositoryWidgetForm", () => {
 	const mockRepositoryWidget = mock<RepositoryWidgetRepository>();
