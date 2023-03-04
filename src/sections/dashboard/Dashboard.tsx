@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 
-import { config } from "../../devdash_config";
 import { GitHubRepositoryRepository } from "../../domain/GitHubRepositoryRepository";
+import { RepositoryWidget } from "../../domain/RepositoryWidget";
 import { RepositoryWidgetRepository } from "../../domain/RepositoryWidgetRepository";
 import styles from "./Dashboard.module.scss";
 import { AddRepositoryWidgetForm } from "./repositoryWidget/AddRepositoryWidgetForm";
@@ -12,13 +12,15 @@ import { WidgetsSkeleton } from "./repositoryWidget/WidgetSkeleton";
 export function Dashboard({
 	gitHubRepositoryRepository,
 	repositoryWidgetRepository,
+	repositoryWidgets: repositoryWidget,
 }: {
 	gitHubRepositoryRepository: GitHubRepositoryRepository;
 	repositoryWidgetRepository: RepositoryWidgetRepository;
+	repositoryWidgets: RepositoryWidget[];
 }) {
 	const gitHubRepositoriesUrls = useMemo(
-		() => config.widgets.map((widget) => widget.repository_url),
-		[]
+		() => repositoryWidget.map((widget) => widget.url),
+		[repositoryWidget]
 	);
 	const { gitHubRepositories, isLoading } = useGitHubRepositories(
 		gitHubRepositoryRepository,
