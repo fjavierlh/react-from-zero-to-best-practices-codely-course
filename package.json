@@ -34,6 +34,10 @@
         "./tsconfig.json"
       ]
     },
+    "rules": {
+      "@typescript-eslint/no-floating-promises": 0,
+      "react/jsx-key": "error"
+    },
     "settings": {
       "import/resolver": {
         "node": {
