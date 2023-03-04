@@ -6,12 +6,14 @@ import { Dashboard } from "../src/sections/dashboard/Dashboard";
 import { GitHubRepositoryRepository } from "./../src/domain/GitHubRepositoryRepository";
 import { GitHubRepositoryMother } from "./GitHubRepositoryMother";
 import { renderWithRouter } from "./renderWithRouter";
+import { RepositoryWidgetMother } from "./RepositoryWidgetMother";
 
 const mockGitHubRepositoryRepository = mock<GitHubRepositoryRepository>();
 const mockRepositoryWidgetRepository = mock<RepositoryWidgetRepository>();
 
 describe("Dashboard", () => {
 	const gitHubRepository = GitHubRepositoryMother.create();
+	const repositoryWidgets = RepositoryWidgetMother.create();
 
 	it("show all widgets", async () => {
 		mockGitHubRepositoryRepository.search.mockResolvedValue([gitHubRepository]);
@@ -20,6 +22,7 @@ describe("Dashboard", () => {
 			<Dashboard
 				gitHubRepositoryRepository={mockGitHubRepositoryRepository}
 				repositoryWidgetRepository={mockRepositoryWidgetRepository}
+				repositoryWidgets={[repositoryWidgets]}
 			/>
 		);
 
@@ -38,6 +41,7 @@ describe("Dashboard", () => {
 			<Dashboard
 				gitHubRepositoryRepository={mockGitHubRepositoryRepository}
 				repositoryWidgetRepository={mockRepositoryWidgetRepository}
+				repositoryWidgets={[repositoryWidgets]}
 			/>
 		);
 
@@ -54,6 +58,7 @@ describe("Dashboard", () => {
 			<Dashboard
 				gitHubRepositoryRepository={mockGitHubRepositoryRepository}
 				repositoryWidgetRepository={mockRepositoryWidgetRepository}
+				repositoryWidgets={[repositoryWidgets]}
 			/>
 		);
 
