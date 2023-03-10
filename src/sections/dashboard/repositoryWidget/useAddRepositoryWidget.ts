@@ -48,6 +48,7 @@ export function useAddRepositoryWidget(repository: RepositoryWidgetRepository): 
 			}
 
 			await repository.persist(repositoryWidget);
+			document.dispatchEvent(new CustomEvent("repositoryWidgetAdded"));
 
 			return initialErrors;
 		},
