@@ -30,6 +30,18 @@ export function RepositoryWidgetContextProvider({
 		});
 	}, [repository]);
 
+	useEffect(() => {
+		const reloadRepositoryWidgets = () => {
+			repository.search().then(setRepositoryWidgets);
+		};
+
+		document.addEventListener("repositoryWidgetAdded", reloadRepositoryWidgets);
+
+		return () => {
+			document.removeEventListener("repositoryWidgetAdded", reloadRepositoryWidgets);
+		};
+	}, [repository]);
+
 	return (
 		<RepositoryWidgetContext.Provider value={{ repositoryWidgets }}>
 			{children}
