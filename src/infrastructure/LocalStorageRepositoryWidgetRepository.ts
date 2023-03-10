@@ -4,10 +4,6 @@ import { RepositoryWidgetRepository } from "./../domain/RepositoryWidgetReposito
 export class LocalStorageRepositoryWidgetRepository implements RepositoryWidgetRepository {
 	localStorageKey = "repositoryWidgets";
 
-	async persist(repositoryWidget: RepositoryWidget): Promise<void> {
-		await Promise.resolve();
-	}
-
 	async search(): Promise<RepositoryWidget[]> {
 		const data = localStorage.getItem(this.localStorageKey);
 
@@ -16,5 +12,13 @@ export class LocalStorageRepositoryWidgetRepository implements RepositoryWidgetR
 		}
 
 		return Promise.resolve(JSON.parse(data) as RepositoryWidget[]);
+	}
+
+	async persist(repositoryWidget: RepositoryWidget): Promise<void> {
+		const currentRepositoryWidget = await this.search();
+		localStorage.setItem(
+			this.localStorageKey,
+			JSON.stringify(currentRepositoryWidget.concat(repositoryWidget))
+		);
 	}
 }
