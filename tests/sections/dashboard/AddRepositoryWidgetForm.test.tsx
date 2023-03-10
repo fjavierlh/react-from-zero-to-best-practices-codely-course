@@ -26,6 +26,7 @@ describe("AddRepositoryWidgetForm", () => {
 	});
 
 	test("add new widget when form is submitted", async () => {
+		const dispatchEventSpy = jest.spyOn(document, "dispatchEvent");
 		mockRepositoryWidget.search.mockResolvedValue([]);
 		const newRepositoryWidget: RepositoryWidget = {
 			id: "someId",
@@ -53,10 +54,11 @@ describe("AddRepositoryWidgetForm", () => {
 		});
 
 		expect(addAnotherNewWidgetButton).toBeInTheDocument();
-		// eslint-disable-next-line @typescript-eslint/unbound-method
 		expect(mockRepositoryWidget.search).toHaveBeenCalled();
-		// eslint-disable-next-line @typescript-eslint/unbound-method
 		expect(mockRepositoryWidget.persist).toHaveBeenCalledWith(newRepositoryWidget);
+
+		expect(dispatchEventSpy).toHaveBeenCalledWith(expect.any(Event));
+		expect(dispatchEventSpy.mock.calls[0][0].type).toBe("repositoryWidgetAdded");
 
 		mockRepositoryWidget.persist.mockReset();
 		mockRepositoryWidget.search.mockClear();
@@ -124,9 +126,7 @@ describe("AddRepositoryWidgetForm", () => {
 		});
 
 		expect(errorMessage).toBeInTheDocument();
-		// eslint-disable-next-line @typescript-eslint/unbound-method
 		expect(mockRepositoryWidget.persist).not.toHaveBeenCalled();
-		// eslint-disable-next-line @typescript-eslint/unbound-method
 		expect(mockRepositoryWidget.search).not.toHaveBeenCalled();
 	});
 
@@ -189,9 +189,7 @@ describe("AddRepositoryWidgetForm", () => {
 		});
 
 		expect(errorMessage).not.toBeInTheDocument();
-		// eslint-disable-next-line @typescript-eslint/unbound-method
 		expect(mockRepositoryWidget.search).toHaveBeenCalled();
-		// eslint-disable-next-line @typescript-eslint/unbound-method
 		expect(mockRepositoryWidget.persist).toHaveBeenCalledWith(widgetWithGitHubDomainUrl);
 
 		mockRepositoryWidget.search.mockReset();
