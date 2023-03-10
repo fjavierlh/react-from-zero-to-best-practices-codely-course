@@ -2,6 +2,7 @@ import { createContext, useContext, useEffect, useState } from "react";
 
 import { config } from "../../../devdash_config";
 import { RepositoryWidget } from "../../../domain/RepositoryWidget";
+import { RepositoryWidgetRepository } from "../../../domain/RepositoryWidgetRepository";
 
 const RepositoryWidgetContext = createContext<{ repositoryWidgets: RepositoryWidget[] }>({
 	repositoryWidgets: [],
@@ -9,16 +10,25 @@ const RepositoryWidgetContext = createContext<{ repositoryWidgets: RepositoryWid
 
 export function RepositoryWidgetContextProvider({
 	children,
+	repository,
 }: {
 	children: React.ReactElement | React.ReactElement[];
+	repository: RepositoryWidgetRepository;
 }) {
 	const [repositoryWidgets, setRepositoryWidgets] = useState<RepositoryWidget[]>([]);
 
 	useEffect(() => {
-		setRepositoryWidgets(
-			config.widgets.map((widget) => ({ id: widget.id, url: widget.repository_url }))
-		);
-	}, []);
+		repository.search().then((repositoryWidgets) => {
+			if (repositoryWidgets.length === 0) {
+				setRepositoryWidgets(
+					config.widgets.map((widget) => ({ id: widget.id, url: widget.repository_url }))
+				);
+
+				return;
+			}
+			setRepositoryWidgets(repositoryWidgets);
+		});
+	}, [repository]);
 
 	return (
 		<RepositoryWidgetContext.Provider value={{ repositoryWidgets }}>
