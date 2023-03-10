@@ -92,9 +92,7 @@ describe("AddRepositoryWidgetForm", () => {
 		});
 
 		expect(errorMessage).toBeInTheDocument();
-		// eslint-disable-next-line @typescript-eslint/unbound-method
 		expect(mockRepositoryWidget.search).toHaveBeenCalled();
-		// eslint-disable-next-line @typescript-eslint/unbound-method
 		expect(mockRepositoryWidget.persist).not.toHaveBeenCalled();
 
 		mockRepositoryWidget.search.mockReset();
