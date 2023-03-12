@@ -107,12 +107,12 @@ interface Workflowrun {
 	check_suite_node_id: string;
 	url: string;
 	html_url: string;
-	pull_requests: any[];
+	pull_requests: unknown[];
 	created_at: string;
 	updated_at: string;
 	actor: Owner;
 	run_attempt: number;
-	referenced_workflows: any[];
+	referenced_workflows: unknown[];
 	run_started_at: string;
 	triggering_actor: Owner;
 	jobs_url: string;
@@ -121,7 +121,7 @@ interface Workflowrun {
 	artifacts_url: string;
 	cancel_url: string;
 	rerun_url: string;
-	previous_attempt_url?: any;
+	previous_attempt_url?: unknown;
 	workflow_url: string;
 	head_commit: Headcommit;
 	repository: Repository;
@@ -205,7 +205,7 @@ interface Repo {
 	has_wiki: boolean;
 	has_pages: boolean;
 	forks_count: number;
-	mirror_url?: any;
+	mirror_url?: unknown;
 	archived: boolean;
 	disabled: boolean;
 	open_issues_count: number;
@@ -213,7 +213,7 @@ interface Repo {
 	allow_forking: boolean;
 	is_template: boolean;
 	web_commit_signoff_required: boolean;
-	topics: any[];
+	topics: unknown[];
 	visibility: string;
 	forks: number;
 	open_issues: number;
@@ -286,7 +286,7 @@ interface Repo2 {
 	has_wiki: boolean;
 	has_pages: boolean;
 	forks_count: number;
-	mirror_url?: any;
+	mirror_url?: unknown;
 	archived: boolean;
 	disabled: boolean;
 	open_issues_count: number;
@@ -345,15 +345,15 @@ export interface PullRequest {
 	body: string;
 	created_at: string;
 	updated_at: string;
-	closed_at?: any;
-	merged_at?: any;
+	closed_at?: unknown;
+	merged_at?: unknown;
 	merge_commit_sha?: string;
-	assignee?: any;
-	assignees: any[];
-	requested_reviewers: any[];
-	requested_teams: any[];
-	labels: any[];
-	milestone?: any;
+	assignee?: unknown;
+	assignees: unknown[];
+	requested_reviewers: unknown[];
+	requested_teams: unknown[];
+	labels: unknown[];
+	milestone?: unknown;
 	draft: boolean;
 	commits_url: string;
 	review_comments_url: string;
@@ -364,8 +364,8 @@ export interface PullRequest {
 	base: Base;
 	_links: Links;
 	author_association: string;
-	auto_merge?: any;
-	active_lock_reason?: any;
+	auto_merge?: unknown;
+	active_lock_reason?: unknown;
 }
 
 export interface RepositoryData {
@@ -433,7 +433,7 @@ export interface RepositoryData {
 	has_wiki: boolean;
 	has_pages: boolean;
 	forks_count: number;
-	mirror_url?: any;
+	mirror_url?: unknown;
 	archived: boolean;
 	disabled: boolean;
 	open_issues_count: number;
