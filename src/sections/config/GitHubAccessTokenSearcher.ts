@@ -1,5 +1,5 @@
-import { config } from "../../../src/devdash_config";
-import { GitHubAccessTokenRepository } from "../../../src/domain/GitHubAccessTokenRepository";
+import { config } from "../../devdash_config";
+import { GitHubAccessTokenRepository } from "../../domain/GitHubAccessTokenRepository";
 
 export class GitHubAccessTokenSearcher {
 	constructor(private readonly repository: GitHubAccessTokenRepository) {}
