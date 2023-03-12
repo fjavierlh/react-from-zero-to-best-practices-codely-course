@@ -1,5 +1,6 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
+import { RouterMiddleware } from "./router/RouterMiddleware";
 import { DashboardFactory } from "./sections/dashboard/DashboardFactory";
 import { GitHubRepositoryDetailFactory } from "./sections/gitHubRepositoryDetail/GitHubRepositoryDetailFactory";
 import { Layout } from "./sections/layout/Layout";
@@ -7,7 +8,11 @@ import { Layout } from "./sections/layout/Layout";
 const router = createBrowserRouter([
 	{
 		path: "/",
-		element: <Layout />,
+		element: (
+			<RouterMiddleware>
+				<Layout />
+			</RouterMiddleware>
+		),
 		children: [
 			{
 				path: "/",
