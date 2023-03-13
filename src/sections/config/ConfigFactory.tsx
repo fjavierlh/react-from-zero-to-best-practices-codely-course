@@ -5,6 +5,6 @@ const repository = new LocalStorageGitHubAccessTokenRepository();
 
 export class ConfigFactory {
 	static create() {
-		return <Config repository={repository}></Config>;
+		return <Config repository={repository} />;
 	}
 }
