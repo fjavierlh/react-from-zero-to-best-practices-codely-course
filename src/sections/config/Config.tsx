@@ -1,5 +1,3 @@
-import { useNavigate } from "react-router-dom";
-
 import { GenericFormEvent } from "../../domain/GenericFormEvent";
 import { GitHubAccessTokenRepository } from "../../domain/GitHubAccessTokenRepository";
 import styles from "./Config.module.scss";
@@ -9,14 +7,13 @@ type FormFields = { gitHubAccessToken: string };
 
 export function Config({ repository }: { repository: GitHubAccessTokenRepository }) {
 	const { save } = useSaveConfig(repository);
-	const navigate = useNavigate();
 
 	const submitForm = (event: GenericFormEvent<FormFields>) => {
 		event.preventDefault();
 		const { gitHubAccessToken } = event.target.elements;
 		save(gitHubAccessToken.value);
 
-		navigate("/");
+		window.location.href = "/";
 	};
 
 	return (
