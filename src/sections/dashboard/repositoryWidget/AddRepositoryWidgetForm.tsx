@@ -1,15 +1,12 @@
-import { FormEvent, useState } from "react";
+import { useState } from "react";
 
 import { ReactComponent as Add } from "../../../assets/svgs/add.svg";
+import { GenericFormEvent } from "../../../domain/GenericFormEvent";
 import { RepositoryWidgetRepository } from "../../../domain/RepositoryWidgetRepository";
 import styles from "./AddRepositoryWidgetForm.module.scss";
 import { AddRepositoryWidgetFormErrors, useAddRepositoryWidget } from "./useAddRepositoryWidget";
 
 type FormFields = { id: string; url: string };
-
-type GenericFormEvent<T> = FormEvent<HTMLFormElement> & {
-	target: { elements: { [key in keyof T]: { value: T[key] } } };
-};
 
 export function AddRepositoryWidgetForm({
 	repositoryWidget,
