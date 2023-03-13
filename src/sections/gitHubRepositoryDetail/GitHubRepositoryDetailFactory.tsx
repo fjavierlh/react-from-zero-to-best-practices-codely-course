@@ -1,13 +1,13 @@
-import { config } from "../../devdash_config";
 import { GitHubApiGitHubRepositoryRepository } from "../../infrastructure/GitHubApiGitHubRepositoryRepository";
 import { GitHubApiGitHubRepositoryPullRequestRepository } from "../../infrastructure/GItHubApiRepositoryPullRequestRepository";
+import { LocalStorageGitHubAccessTokenRepository } from "../../infrastructure/LocalStorageGitHubAccessTokenRepository";
 import { GitHubRepositoryDetail } from "./GitHubRepositoryDetail";
 
-const ACCESS_TOKEN = config.github_access_token;
-
-const gitHubRepositoryRepository = new GitHubApiGitHubRepositoryRepository(ACCESS_TOKEN);
+const gitHubAccessTokenRepository = new LocalStorageGitHubAccessTokenRepository();
+const gitHubAccessToken = gitHubAccessTokenRepository.search();
+const gitHubRepositoryRepository = new GitHubApiGitHubRepositoryRepository(gitHubAccessToken);
 const gitHubRepositoryPullRequestsRepository = new GitHubApiGitHubRepositoryPullRequestRepository(
-	ACCESS_TOKEN
+	gitHubAccessToken
 );
 export class GitHubRepositoryDetailFactory {
 	static create() {

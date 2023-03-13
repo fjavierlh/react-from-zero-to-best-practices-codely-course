@@ -1,15 +1,17 @@
 import { ReactElement } from "react";
 
-import { config } from "../../devdash_config";
 import { GitHubApiGitHubRepositoryRepository } from "../../infrastructure/GitHubApiGitHubRepositoryRepository";
+import { LocalStorageGitHubAccessTokenRepository } from "../../infrastructure/LocalStorageGitHubAccessTokenRepository";
 import { LocalStorageRepositoryWidgetRepository } from "../../infrastructure/LocalStorageRepositoryWidgetRepository";
 import { Dashboard } from "./Dashboard";
 import { useRepositoryWidgetContext } from "./repositoryWidget/RepositoryWidgetContextProvider";
 
-const gitHubRepositoryRepository = new GitHubApiGitHubRepositoryRepository(
-	config.github_access_token
-);
 const repositoryWidgetRepository = new LocalStorageRepositoryWidgetRepository();
+
+const gitHubAccessTokenRepository = new LocalStorageGitHubAccessTokenRepository();
+const gitHubRepositoryRepository = new GitHubApiGitHubRepositoryRepository(
+	gitHubAccessTokenRepository.search()
+);
 
 export function DashboardFactory(): ReactElement {
 	const { repositoryWidgets } = useRepositoryWidgetContext();
